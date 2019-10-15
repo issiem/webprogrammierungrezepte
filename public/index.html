@@ -48,27 +48,7 @@
   });
 
 
-  const delForm = document.querySelector('#delRecipe');
-
-  delForm.addEventListener('submit', (event) => {
-    event.preventDefault();
     // how does id get filled here? place an id in the innerhtml and get it to make the corresponding delete REST call
-    fetch('/recipes/:id', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject('An error occurred.');
-        }
-      })
-      .then(res => console.log(res));
-  });
-
 
 
   function createListItem(recipe) {
@@ -82,8 +62,24 @@
     cell1.innerHTML = recipe.title;
     cell2.innerHTML = recipe.ingredients;
     cell3.innerHTML = recipe.instructions;
-    cell4.innerHTML = "<form id=delRecipe method=push action=recipes/" + recipe.id + "><input type=submit value=Löschen></form>";
+    cell4.innerHTML = '<form id="delForm" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
+    
+    const delForm = document.querySelector('#delForm');
+
+delForm.addEventListener('submit', (event) => {
+event.preventDefault();
+  fetch('/recipes/'+recipe.id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => console.log(res));
+});
+  
   }
+
+
 
   function deleteListItem(thisRow) {
     /*this is only visual, not in json. don't use
