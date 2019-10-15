@@ -19,8 +19,8 @@ app.get('/recipes/:id', (req, res) => {
    // make sure its a number, because a url parameter is always a string
    const id = Number(req.params.id);
   // filter out if it has the same id
-  recipe = recipes.filter(x => id);
-  console.log(recipe);
+  recipe = recipes.filter(x => x.id == id);
+  res.status(200).json(recipe);
 });
 
 
