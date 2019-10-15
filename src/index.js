@@ -26,9 +26,6 @@ app.post('/recipes', (req, res) => {
 
 // remove a recipe
 app.delete('/recipes/:id', (req, res) => {
-
-  console.log(req.params.id);
-
   // make sure its a number, because a url parameter is always a string
   const id = Number(req.params.id);
   // filter out if it has the same id
@@ -42,7 +39,7 @@ app.delete('/recipes/:id', (req, res) => {
 
   // override the recipes with the filtered array
   recipes = afterReduction;
-  res.status(202).send();
+  res.status(202).json(recipes);
 });
 
 

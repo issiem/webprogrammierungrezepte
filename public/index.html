@@ -38,7 +38,6 @@
 
   });
 
-
   fetch('/recipes').then(res => {
     return res.json();
   }).then(recipes => {
@@ -62,9 +61,9 @@
     cell1.innerHTML = recipe.title;
     cell2.innerHTML = recipe.ingredients;
     cell3.innerHTML = recipe.instructions;
-    cell4.innerHTML = '<form id="delForm" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
+    cell4.innerHTML = '<form id="delForm'+recipe.id+'" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
     
-    const delForm = document.querySelector('#delForm');
+    const delForm = document.querySelector('#delForm'+recipe.id);
 
 delForm.addEventListener('submit', (event) => {
 event.preventDefault();
@@ -76,8 +75,8 @@ event.preventDefault();
   })
     .then(res => console.log(res));
 });
-  
   }
+
 
 
 
