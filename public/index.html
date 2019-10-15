@@ -9,7 +9,8 @@
 <form id="createRecipeForm">
   <p><input type="text" placeholder="Titel des Rezepts" required name="title"></p>
   <p><input type="text" placeholder="Welche Zutaten benötigen wir?" required name="ingredients"></p>
-  <p><input type="text" placeholder="Welche Schritte müssen wir beim Nachkochen befolgen?" required name="instructions"></p>
+  <p><input type="text" placeholder="Welche Schritte müssen wir beim Nachkochen befolgen?" required name="instructions">
+  </p>
   <p><input type="email" placeholder="Wie können wir dich für Rückfragen erreichen?" required name="mail"></p>
   <button type="submit">Create Recipe</button>
 </form>
@@ -19,9 +20,9 @@
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-	
+
     const values = Object.fromEntries(new FormData(event.target));
-    
+
     fetch('/recipes', {
       method: 'POST',
       headers: {
@@ -32,13 +33,13 @@
       return res.json();
     }).then(recipe => {
       createListItem(recipe);
-    });  
+    });
 
 
-      });
+  });
 
 
-    fetch('/recipes').then(res => {
+  fetch('/recipes').then(res => {
     return res.json();
   }).then(recipes => {
     recipes.forEach(recipe => {
@@ -51,37 +52,37 @@
 
   delForm.addEventListener('submit', (event) => {
     event.preventDefault();
-
-    fetch('recipes:id', {
-    method: 'DELETE',
-    headers: {
+    // how does id get filled here? place an id in the innerhtml and get it to make the corresponding delete REST call
+    fetch('/recipes/:id', {
+      method: 'DELETE',
+      headers: {
         'Content-Type': 'application/json'
-    }
-})
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject('An error occurred.');
-        }
+      }
     })
-    .then(res => console.log(res));
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return Promise.reject('An error occurred.');
+        }
+      })
+      .then(res => console.log(res));
   });
-    
+
 
 
   function createListItem(recipe) {
 
-  var table = document.getElementById("recipes");
-  var row = table.insertRow();
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
-  cell1.innerHTML = recipe.title;
-  cell2.innerHTML = recipe.ingredients;
-  cell3.innerHTML = recipe.instructions;
-  cell4.innerHTML = "<form id=delRecipe method=push action =recipes:id><input type=submit value=Löschen></form>";
+    var table = document.getElementById("recipes");
+    var row = table.insertRow();
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    cell1.innerHTML = recipe.title;
+    cell2.innerHTML = recipe.ingredients;
+    cell3.innerHTML = recipe.instructions;
+    cell4.innerHTML = "<form id=delRecipe method=push action=recipes:id><input type=submit value=Löschen></form>";
   }
 
   function deleteListItem(thisRow) {
