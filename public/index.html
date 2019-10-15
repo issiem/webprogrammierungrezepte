@@ -77,29 +77,13 @@
     updForm.addEventListener('submit', (event) => {
       event.preventDefault();
       fetch('/recipes/'+recipe.id).then(res => {
-    return res.json();
-  }).then(recipes => {
-    recipes.forEach(recipe => {
-      createListItem(recipe);
+        console.log(res);
+    document.getElementById("title").value = res.title;
+      document.getElementById("ingredients").value = res.ingredients;
+      document.getElementById("instructions").value = res.instructions;
     });
   });
-
-      document.getElementById("title").value = recipe.title;
-      document.getElementById("ingredients").value = recipe.ingredients;
-      document.getElementById("instructions").value = recipe.instructions;
-
-      fetch('/recipes/' + recipe.id, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(() => {
-        row.remove();
-      }
-
-      );
-    });
-  }
+    }
 
   fetch('/recipes').then(res => {
     return res.json();

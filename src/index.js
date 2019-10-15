@@ -14,6 +14,16 @@ app.get('/recipes', (req, res) => {
   res.status(200).json(recipes);
 });
 
+// get specific recipe
+app.get('/recipes/:id', (req, res) => {
+   // make sure its a number, because a url parameter is always a string
+   const id = Number(req.params.id);
+  // filter out if it has the same id
+  recipe = recipes.filter(x => id);
+  console.log(recipe);
+});
+
+
 // create a new recipe
 app.post('/recipes', (req, res) => {
   const recipe = req.body;

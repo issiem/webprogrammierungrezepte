@@ -1,9 +1,9 @@
 [
   {
-    "id": 1,
     "title": "Platzhalterrezept",
     "ingredients": "Beispielzutat",
     "instructions": "lorem ipsum",
-    "author": "test@example.de"
+    "mail": "test@example.de",
+    "id": 1
   }
 ]
