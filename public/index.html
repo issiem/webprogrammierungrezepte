@@ -7,7 +7,7 @@
   </tr>
 </table>
 <form id="createRecipeForm">
-  <p><input type="text" placeholder="Titel des Rezepts" required name="title"></p>
+  <p><input id="title" type="text" placeholder="Titel des Rezepts" required name="title"></p>
   <p><input type="text" placeholder="Welche Zutaten benötigen wir?" required name="ingredients"></p>
   <p><input type="text" placeholder="Welche Schritte müssen wir beim Nachkochen befolgen?" required name="instructions">
   </p>
@@ -55,7 +55,7 @@
     cell2.innerHTML = recipe.ingredients;
     cell3.innerHTML = recipe.instructions;
     cell4.innerHTML = '<form id="delForm' + recipe.id + '" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
-    cell5.innerHTML = '<form id="updForm'+recipe.id+'"method="push" action="/recipes/'+ recipe.id + '"><input type="submit" value ="Bearbeiten"></form>';  
+    cell5.innerHTML = '<form id="updForm' + recipe.id + '"method="push" action="/recipes/' + recipe.id + '"><input type="submit" value ="Bearbeiten"></form>';
 
     const delForm = document.querySelector('#delForm' + recipe.id);
     const updForm = document.querySelector('#updForm' + recipe.id);
@@ -76,14 +76,18 @@
 
     updForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      fetch('/recipes/'+recipe.id).then(res => {
+      fetch('/recipes/' + recipe.id)
+      .then(res => {
         console.log(res);
-    document.getElementById("title").value = res.title;
-      document.getElementById("ingredients").value = res.ingredients;
-      document.getElementById("instructions").value = res.instructions;
+        return res.json();
+      }).then(recipe => {
+        console.log(recipe);
+        document.getElementById("title").value = recipe.title;
+        /* document.getElementById("ingredients").setValue = recipe.ingredients;
+         document.getElementById("instructions").setValue = recipe.instructions;*/
+      });
     });
-  });
-    }
+  }
 
   fetch('/recipes').then(res => {
     return res.json();
