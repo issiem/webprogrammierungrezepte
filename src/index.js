@@ -42,5 +42,9 @@ app.delete('/recipes/:id', (req, res) => {
   recipes = afterReduction;
   res.status(202).send();
 });
+app.put('/recipes/', (req, res) => {
+  console.log(req.body)
 
+  res.status(200).send();
+})
 app.listen(3000);
