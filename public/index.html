@@ -47,7 +47,7 @@
   });
 
 
-    // how does id get filled here? place an id in the innerhtml and get it to make the corresponding delete REST call
+  // how does id get filled here? place an id in the innerhtml and get it to make the corresponding delete REST call
 
 
   function createListItem(recipe) {
@@ -61,27 +61,39 @@
     cell1.innerHTML = recipe.title;
     cell2.innerHTML = recipe.ingredients;
     cell3.innerHTML = recipe.instructions;
-    cell4.innerHTML = '<form id="delForm'+recipe.id+'" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
-    
-    const delForm = document.querySelector('#delForm'+recipe.id);
+    cell4.innerHTML = '<form id="delForm' + recipe.id + '" method="push" action="/recipes/' + recipe.id + '"><input type="submit" value="Löschen"></form>';
 
-delForm.addEventListener('submit', (event) => {
-event.preventDefault();
-  fetch('/recipes/'+recipe.id, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => console.log(res));
-});
+    const delForm = document.querySelector('#delForm' + recipe.id);
+
+    delForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch('/recipes/' + recipe.id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => console.log(res));
+    });
   }
 
 
 
 
   function deleteListItem(thisRow) {
-    /*this is only visual, not in json. don't use
-        thisRow.parentNode.parentNode.parentNode.removeChild(thisRow.parentNode.parentNode);*/
+    thisRow.parentNode.parentNode.parentNode.removeChild(thisRow.parentNode.parentNode);
+  }
+  async function updateRecipe(recipe) {
+    await fetch('/ticket/' + recipe.id, {
+      methode: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(ticket)
+    })
+      .then(res => res.json())
+      .then(tickets => {
+        console.log(recipes)
+      });
   }
 </script>

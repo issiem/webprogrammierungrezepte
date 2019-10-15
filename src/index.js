@@ -42,5 +42,25 @@ app.delete('/recipes/:id', (req, res) => {
   res.status(202).json(recipes);
 });
 
+app.put('/recipes/:id', (req, res) => {
+  const editedRecipe = req.body
+  let id = req.param.id;
 
+  let recipeObj = recipes[id];
+  if (recipeObj === undefined || recipeObj === null) {
+    res.status(404).json({ "error": "Recipe not found" });
+  } else {
+    recipeObj.id = editedRecipe.id;
+    recipeObj.title = editedRecipe.titel;
+    recipeObj.ingredients = editedRecipe.ingredients;
+    recipeObj.instruction = editedRecipe.instruction;
+    recipeObj.author = editedRecipe.author;
+
+    recipes.splice(id, 1, recipeObj);
+
+    console.log(recipes);
+    res.status(200).json(recipes);
+
+  }
+});
 app.listen(3000);
