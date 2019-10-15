@@ -35,16 +35,8 @@
       createListItem(recipe);
     });
 
-
   });
 
-  fetch('/recipes').then(res => {
-    return res.json();
-  }).then(recipes => {
-    recipes.forEach(recipe => {
-      createListItem(recipe);
-    });
-  });
 
 
     // how does id get filled here? place an id in the innerhtml and get it to make the corresponding delete REST call
@@ -72,16 +64,21 @@ event.preventDefault();
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-    .then(res => console.log(res));
-});
+  }).then(()=> {
+    row.remove();
   }
 
+  );
+  });
 
+}
 
+  fetch('/recipes').then(res => {
+    return res.json();
+  }).then(recipes => {
+    recipes.forEach(recipe => {
+      createListItem(recipe);
+    });
+  });
 
-  function deleteListItem(thisRow) {
-    /*this is only visual, not in json. don't use
-        thisRow.parentNode.parentNode.parentNode.removeChild(thisRow.parentNode.parentNode);*/
-  }
 </script>

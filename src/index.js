@@ -33,7 +33,7 @@ app.delete('/recipes/:id', (req, res) => {
 
   // the length is not equal if a recipe was removed
   if (afterReduction.length === recipes.length) {
-    res.status(404).send();
+    res.status(404).json(recipes);
     return;
   }
 
