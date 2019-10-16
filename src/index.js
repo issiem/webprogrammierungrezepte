@@ -1,11 +1,13 @@
-
+// this backend is based on express-framework
 const express = require('express');
 const app = express();
 
+// where to found recipes.json for data retention
 let recipes = require('../recipes.json');
+// total number of recipes, needed by create and delete methods
 let idCount = recipes.length;
 
-
+// make index.html and other public ressources accessible
 app.use(express.static('./public'));
 app.use(express.json());
 
@@ -16,8 +18,8 @@ app.get('/recipes', (req, res) => {
 
 // get specific recipe
 app.get('/recipes/:id', (req, res) => {
-   // make sure its a number, because a url parameter is always a string
-   const id = Number(req.params.id);
+  // make sure its a number, because a url parameter is always a string
+  const id = Number(req.params.id);
   // filter out if it has the same id
   recipe = recipes.find(x => x.id == id);
   res.status(200).json(recipe);
@@ -52,6 +54,7 @@ app.delete('/recipes/:id', (req, res) => {
   res.status(202).json(recipes);
 });
 
+// this method is created by Franziska and Annika and not tested yet.
 app.put('/recipes/:id', (req, res) => {
   const editedRecipe = req.body
   let id = req.param.id;
@@ -73,4 +76,5 @@ app.put('/recipes/:id', (req, res) => {
 
   }
 });
+// you can access this webserver on port 3000
 app.listen(3000);
